@@ -28,4 +28,5 @@ class UsuarioSeeder extends Seeder
         
         dd($usuarioModel->errors());
     }
+
 }
