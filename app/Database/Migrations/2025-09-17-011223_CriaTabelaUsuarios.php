@@ -26,6 +26,8 @@ class CriaTabelaUsuarios extends Migration
             'cpf' => [
                 'type' => 'VARCHAR',
                 'constraint' => '20',
+                'null' => true,
+                'unique' => true,
             ],
             'telefone' => [
                 'type' => 'VARCHAR',
@@ -47,11 +49,15 @@ class CriaTabelaUsuarios extends Migration
             ],
             'ativacao_hash' => [
                 'type' => 'VARCHAR',
-                'constraint' => '255',
+                'constraint' => '64',
+                'unique' => true,
+                'null' => true,
             ], 
             'reset_hash' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
+                'unique' => true,
+                'null' => true,
             ],
             'reset_expira_em' => [
                 'type' => 'DATETIME',
@@ -74,10 +80,13 @@ class CriaTabelaUsuarios extends Migration
                 'default' => null,
             ],                                                                                    
         ]);
+
+        $this->forge->addPrimaryKey('id')->addUniqueKey('email');
+        $this->forge->createTable('usuarios');
     }
 
     public function down()
     {
-        //
+        $this->forge->dropTable('usuarios');
     }
 }
