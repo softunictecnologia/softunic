@@ -8,7 +8,7 @@ class UsuarioModel extends Model
 {
     protected $table            = 'usuarios';
     protected $returnType       = 'App\Entities\Usuario';
-    protected $allowedFields    = ['nome', 'email', 'telefone'];
+    protected $allowedFields    = ['nome', 'email', 'cpf', 'telefone',];
     protected $useSoftDeletes   = true;
     protected $useTimestamps    = true;
     protected $createdField     = 'criado_em';
@@ -34,6 +34,14 @@ class UsuarioModel extends Model
             'required' => 'Este campo é obrigatório.',
             'is_unique' => 'Desculpe. Este CPF já existe.',
         ],
+        'password' => [
+            'required' => 'Este campo é obrigatório.',
+            'min_length' => 'Campo senha tem que ter no mínimo 6 caracteres',
+        ],         
+        'password_confirmation' => [
+            'required_with' => 'Este campo é obrigatório.',
+            'matches' => 'As senhas não conferem.',
+        ],        
     ];
 
     /**
@@ -50,5 +58,10 @@ class UsuarioModel extends Model
             ->like('nome', $term)
             ->get()
             ->getResult();
+    }
+
+    public function desabilitaValidacaoSenha(){
+        unset($this->validationRules['password']);
+        unset($this->validationRules['password_confirmation']);
     }
 }
