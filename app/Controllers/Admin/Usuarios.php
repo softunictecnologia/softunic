@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\UsuarioModel;
 use CodeIgniter\HTTP\ResponseInterface;
+use App\Entities\Usuario;
 
 class Usuarios extends BaseController
 {
@@ -54,6 +55,16 @@ class Usuarios extends BaseController
         return view('Admin/Usuarios/show', $data);
     }
 
+    public function criar($id = null)
+    {
+        $usuario = new Usuario();
+        $data = [
+            'titulo' => "Criando um novo usuário",
+            'usuario' => $usuario,
+        ];
+        return view('Admin/Usuarios/criar', $data);
+    }
+
     public function editar($id = null)
     {
         $usuario = $this->buscaUsuarioOu404($id);
@@ -67,7 +78,7 @@ class Usuarios extends BaseController
     public function atualizar($id = null)
     {
         if ($this->request->getMethod(true) === 'POST') {
-            
+
             $usuario = $this->buscaUsuarioOu404($id);
 
             $post = $this->request->getPost();
@@ -80,8 +91,8 @@ class Usuarios extends BaseController
 
             $usuario->fill($post);
 
-            if (!$usuario->hasChanged()){
-                redirect()->back()->with('info', 'Não há dados para atualizar');
+            if (!$usuario->hasChanged()) {
+                return redirect()->back()->with('info', 'Não há dados para atualizar');
             }
 
             if ($this->usuarioModel->protect(false)->save($usuario)) {
@@ -94,7 +105,27 @@ class Usuarios extends BaseController
                     ->with('atencao', 'Por favor verifique os erros abaixo.')
                     ->withInput();
             }
-            
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function cadastrar()
+    {
+        if ($this->request->getMethod(true) === 'POST') {
+
+            $usuario = new Usuario($this->request->getPost());
+
+            if ($this->usuarioModel->protect(false)->save($usuario)) {
+                return redirect()
+                    ->to(site_url("admin/usuarios/show/" . $this->usuarioModel->getInsertID()))
+                    ->with('sucesso', "Usuário $usuario->nome cadastrado com sucesso.");
+            } else {
+                return redirect()->back()
+                    ->with('errors_model', $this->usuarioModel->errors())
+                    ->with('atencao', 'Por favor verifique os erros abaixo.')
+                    ->withInput();
+            }
         } else {
             return redirect()->back();
         }

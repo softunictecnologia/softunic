@@ -24,8 +24,13 @@
       <h4 class="card-title"><?php echo $titulo; ?></h4>
 
       <div class="ui-widget">
-        <input id="query" name="query" class="form-control bg-light mb-5" placeholder="Pesquise por um usuário...">
+        <input id="query" name="query" class="form-control bg-light mb-3" placeholder="Pesquise por um usuário...">
       </div>
+
+      <a href="<?php echo site_url("admin/usuarios/criar"); ?>" class="btn btn-primary mb-2">
+        <i class="mdi mdi-plus btn-icon-prepend"></i>
+        Cadastrar
+      </a>
 
       <div class="table-responsive">
         <table class="table table-hover">

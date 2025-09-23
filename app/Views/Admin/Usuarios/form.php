@@ -30,14 +30,14 @@
       <label for="confirmation_password">Confirmação de senha</label>
       <input type="text" class="form-control" id="password_confirmation" name="password_confirmation">
    </div>
-</div>   
+</div>
 
 <div class="form-row">
    <div class="form-check form-check-flat form-check-primary col-md-3">
       <label for="is_admin" class="form-check-label">
          <input type="hidden" name="is_admin" id="is_admin" value="0">
          <input type="checkbox" name="is_admin" id="is_admin" value="1" <?php if (old('is_admin', $usuario->is_admin)): ?> checked <?php endif; ?>>
-         Administrador      
+         Administrador
       </label>
    </div>
 
@@ -45,18 +45,12 @@
       <label for="ativo" class="form-check-label">
          <input type="hidden" name="ativo" id="ativo" value="0">
          <input type="checkbox" name="ativo" id="ativo" value="1" <?php if (old('ativo', $usuario->ativo)): ?> checked <?php endif; ?>>
-         Ativo      
+         Ativo
       </label>
    </div>
-</div>   
+</div>
 
-<div class="form-row">
 <button type="submit" class="btn btn-primary btn-sm mr-2">
    <i class="mdi mdi-checkbox-marked-circle btn-icon-prepend"></i>
    Salvar
 </button>
-<a href="<?php echo site_url("admin/usuarios/show/$usuario->id"); ?>" class="btn btn-light text-dark btn-sm">
-   <i class="mdi mdi-arrow-left btn-icon-prepend"></i>
-   Voltar
-</a>
-</div>

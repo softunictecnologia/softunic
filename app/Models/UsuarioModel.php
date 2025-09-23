@@ -8,18 +8,19 @@ class UsuarioModel extends Model
 {
     protected $table                = 'usuarios';
     protected $returnType           = 'App\Entities\Usuario';
-    protected $allowedFields        = ['nome', 'email', 'cpf', 'telefone',];
+    protected $primaryKey           = 'id';
+    protected $allowedFields        = ['nome', 'email', 'cpf', 'telefone'];
     protected $useSoftDeletes       = true;
     protected $useTimestamps        = true;
     protected $createdField         = 'criado_em';
     protected $updatedField         = 'atualizado_em';
     protected $deletedField         = 'deletado_em';
-    protected bool $updateOnlyChanged = false;
+    protected bool $updateOnlyChanged = true;
 
     protected $validationRules = [
         'nome'                  => 'required|min_length[4]|max_length[120]',
         'email'                 => 'required|valid_email|is_unique[usuarios.email]',
-        'cpf'                   => 'required|is_unique[usuarios.cpf]',
+        'cpf'                   => 'required|is_unique[usuarios.cpf]|validaCpf',
         'telefone'              => 'required|max_length[20]',
         'password'              => 'required|min_length[6]',
         'password_confirmation' => 'required_with[password]|matches[password]',
@@ -38,16 +39,29 @@ class UsuarioModel extends Model
         ],
         'telefone' => [
             'required' => 'O campo Telefone é obrigatório.',
-        ],        
+        ],
         'password' => [
             'required' => 'O campo Senha é obrigatório.',
             'min_length' => 'Campo senha tem que ter no mínimo 6 caracteres',
-        ],         
+        ],
         'password_confirmation' => [
             'required_with' => 'O campo Confirmação de Senha é obrigatório.',
             'matches' => 'As senhas não conferem.',
-        ],        
+        ],
     ];
+
+    protected $beforeInsert = ['hashPassword'];
+    protected $beforeUpdate = ['hashPassword'];
+
+    protected function hashPassword(array $data)
+    {
+        if (isset($data['data']['password'])) {
+            $data['data']['password_hash'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+            unset($data['data']['password']);
+            unset($data['data']['password_confirmation']);
+        }
+        return $data;
+    }
 
     /**
      * @uso Controller usuarios no metodo procurar com o autocomplete
@@ -65,7 +79,8 @@ class UsuarioModel extends Model
             ->getResult();
     }
 
-    public function desabilitaValidacaoSenha(){
+    public function desabilitaValidacaoSenha()
+    {
         unset($this->validationRules['password']);
         unset($this->validationRules['password_confirmation']);
     }
