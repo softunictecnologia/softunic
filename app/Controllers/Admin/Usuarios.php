@@ -89,7 +89,7 @@ class Usuarios extends BaseController
 
             if ($usuario->deletado_em != null) {
                 return redirect()->back()->with('info', "O usuário $usuario->nome encontra-se excluído. Portanto não é possível edita-lo");
-            }            
+            }
 
             $post = $this->request->getPost();
 
@@ -126,7 +126,7 @@ class Usuarios extends BaseController
 
         if ($usuario->deletado_em != null) {
             return redirect()->back()->with('info', "O usuário $usuario->nome encontra-se excluído.");
-        }        
+        }
 
         if ($usuario->is_admin) {
             return redirect()->back()->with('info', 'Não é possível excluir um <b>Administador</b>');
@@ -144,12 +144,13 @@ class Usuarios extends BaseController
         return view('Admin/Usuarios/excluir', $data);
     }
 
-    public function desfazerExclusao($id = null){
+    public function desfazerExclusao($id = null)
+    {
         $usuario = $this->buscaUsuarioOu404($id);
-        
+
         if ($usuario->deletado_em == null) {
             return redirect()->back()->with('info', 'Apenas usuários excluidos podem ser recuperados');
-        }    
+        }
 
         if ($this->usuarioModel->desfazerExclusao($id)) {
             return redirect()->back()->with('sucesso', 'Exclusão desfeita com sucesso');
@@ -157,7 +158,7 @@ class Usuarios extends BaseController
             return redirect()->back()
                 ->with('errors_model', $this->usuarioModel->errors())
                 ->with('atencao', 'Por favor verifique os erros abaixo.')
-                ->withInput();            
+                ->withInput();
         }
     }
 

@@ -53,27 +53,27 @@
                 <td><?php echo esc($usuario->cpf); ?></td>
                 <td>
                   <?php echo ($usuario->ativo && $usuario->deletado_em == null ? '<label class="badge badge-primary">Sim</label>'
-                                                : '<label class="badge badge-danger">Não</label>'); 
-                  ?> 
+                    : '<label class="badge badge-danger">Não</label>');
+                  ?>
                 </td>
                 <td>
                   <?php echo ($usuario->deletado_em == null ? '<label class="badge badge-primary">Disponível</label>'
-                                                : '<label class="badge badge-danger">Excluído</label>'); 
-                  ?> 
-                  <?php if($usuario->deletado_em != null):?>
+                    : '<label class="badge badge-danger">Excluído</label>');
+                  ?>
+                  <?php if ($usuario->deletado_em != null): ?>
                     <a href="<?php echo site_url("admin/usuarios/desfazerexclusao/$usuario->id"); ?>" class="badge badge-success ml-2">
                       <i class="mdi mdi-undo btn-icon-prepend"></i>
                       Desfazer
-                    </a>   
-                  <?php endif; ?>               
+                    </a>
+                  <?php endif; ?>
                 </td>
               <?php endforeach; ?>
               </tr>
           </tbody>
         </table>
-      <div class="mt-3">
-        <?php echo $pager->link() ?>
-      </div>  
+        <div class="mt-3">
+          <?php echo $pager->links() ?>
+        </div>
       </div>
     </div>
   </div>
