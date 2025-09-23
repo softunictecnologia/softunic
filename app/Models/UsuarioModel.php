@@ -10,13 +10,16 @@ class UsuarioModel extends Model
     protected $returnType           = 'App\Entities\Usuario';
     protected $primaryKey           = 'id';
     protected $allowedFields        = ['nome', 'email', 'cpf', 'telefone'];
-    protected $useSoftDeletes       = true;
-    protected $useTimestamps        = true;
+
+    //Datas
+    protected $useTimestamps        = true;   
     protected $createdField         = 'criado_em';
     protected $updatedField         = 'atualizado_em';
+    protected $dateFormat           = 'datetime';     
+    protected $useSoftDeletes       = true;
     protected $deletedField         = 'deletado_em';
-    protected bool $updateOnlyChanged = true;
 
+    //Validações
     protected $validationRules = [
         'nome'                  => 'required|min_length[4]|max_length[120]',
         'email'                 => 'required|valid_email|is_unique[usuarios.email]',
@@ -83,5 +86,12 @@ class UsuarioModel extends Model
     {
         unset($this->validationRules['password']);
         unset($this->validationRules['password_confirmation']);
+    }
+
+    public function desfazerExclusao(int $id){
+        return $this->protect(false)
+                    ->where('id', $id)
+                    ->set('deletado_em', null)
+                    ->update();
     }
 }
