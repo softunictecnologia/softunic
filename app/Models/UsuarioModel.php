@@ -12,10 +12,10 @@ class UsuarioModel extends Model
     protected $allowedFields        = ['nome', 'email', 'cpf', 'telefone'];
 
     //Datas
-    protected $useTimestamps        = true;   
+    protected $useTimestamps        = true;
     protected $createdField         = 'criado_em';
     protected $updatedField         = 'atualizado_em';
-    protected $dateFormat           = 'datetime';     
+    protected $dateFormat           = 'datetime';
     protected $useSoftDeletes       = true;
     protected $deletedField         = 'deletado_em';
 
@@ -88,10 +88,16 @@ class UsuarioModel extends Model
         unset($this->validationRules['password_confirmation']);
     }
 
-    public function desfazerExclusao(int $id){
+    public function desfazerExclusao(int $id)
+    {
         return $this->protect(false)
-                    ->where('id', $id)
-                    ->set('deletado_em', null)
-                    ->update();
+            ->where('id', $id)
+            ->set('deletado_em', null)
+            ->update();
+    }
+
+    public function buscaUsuarioPorEmail(string $email)
+    {
+        return $this->where('email', $email)->first();
     }
 }
