@@ -12,11 +12,19 @@ class Usuarios extends BaseController
 
     private $usuarioModel;
 
+    /**
+     * Inicialização da Conexão usuárioModel
+     */
     public function __construct()
     {
         $this->usuarioModel = new \App\Models\UsuarioModel();
     }
 
+    /**
+     * Controlador de carregamento da página inicial com paginate
+     *
+     * @return void
+     */
     public function index()
     {
         $data = [
@@ -28,6 +36,11 @@ class Usuarios extends BaseController
         return view('Admin/Usuarios/index', $data);
     }
 
+    /**
+     * Controlador do campo busca na página principal
+     *
+     * @return void
+     */
     public function procurar()
     {
         if (!$this->request->isAJAX()) {
@@ -46,6 +59,12 @@ class Usuarios extends BaseController
         return $this->response->setJSON($retorno);
     }
 
+    /**
+     * Controlador para visualizar dados do usuário
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function show($id = null)
     {
         $usuario = $this->buscaUsuarioOu404($id);
@@ -56,6 +75,12 @@ class Usuarios extends BaseController
         return view('Admin/Usuarios/show', $data);
     }
 
+    /**
+     * Controlador para mostrar form vazio para um novo cadastro
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function criar($id = null)
     {
         $usuario = new Usuario();
@@ -66,6 +91,12 @@ class Usuarios extends BaseController
         return view('Admin/Usuarios/criar', $data);
     }
 
+    /**
+     * Controlador para mostrar dados no Form para Editar
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function editar($id = null)
     {
         $usuario = $this->buscaUsuarioOu404($id);
@@ -81,6 +112,12 @@ class Usuarios extends BaseController
         return view('Admin/Usuarios/editar', $data);
     }
 
+    /**
+     * Controlador para Atualizar os dados no banco de dados
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function atualizar($id = null)
     {
         if ($this->request->getMethod(true) === 'POST') {
@@ -120,6 +157,12 @@ class Usuarios extends BaseController
         }
     }
 
+    /**
+     * Controlador para excluir o usuário selecionado
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function excluir($id = null)
     {
         $usuario = $this->buscaUsuarioOu404($id);
@@ -144,6 +187,12 @@ class Usuarios extends BaseController
         return view('Admin/Usuarios/excluir', $data);
     }
 
+    /**
+     * Controlador para desfazer a exclusão do usuário
+     *
+     * @param [type] $id
+     * @return void
+     */
     public function desfazerExclusao($id = null)
     {
         $usuario = $this->buscaUsuarioOu404($id);
@@ -162,6 +211,11 @@ class Usuarios extends BaseController
         }
     }
 
+    /**
+     * Controlador para cadastrar um novo usuário
+     *
+     * @return void
+     */
     public function cadastrar()
     {
         if ($this->request->getMethod(true) === 'POST') {
@@ -183,6 +237,12 @@ class Usuarios extends BaseController
         }
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param integer|null $id
+     * @return object
+     */
     private function buscaUsuarioOu404(int|null $id)
     {
         if (!$id || !$usuario = $this->usuarioModel->withDeleted(true)->where('id', $id)->first()) {

@@ -60,24 +60,23 @@
                <div class="brand-logo">
                   <img src="<?php echo site_url('admin/') ?>images/logo.svg" alt="logo">
                </div>
-               <h4>Olá, Seja bem vindo(a)!</h4>
-               <h6 class="font-weight-light">Por favor realize o login.</h6>
-               <?php echo form_open('login/criar'); ?>
+               <h4>Recuperação de Senha!</h4>
+               <h6 class="font-weight-light"><?php echo $titulo; ?></h6>
+
+               <?php echo form_open('password/processaesqueci'); ?>
+
                <div class="form-group">
                   <input type="email" class="form-control form-control-lg" name="email" value="<?php old('email'); ?>" id="exampleInputEmail1" placeholder="Digite seu e-mail">
                </div>
-               <div class="form-group">
-                  <input type="password" class="form-control form-control-lg" name="password" id="exampleInputPassword1" placeholder="Digite sua senha">
-               </div>
+
                <div class="mt-3">
-                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">ACESSAR</button>
+                  <input id="btn-reset-senha" type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"
+                     value="RECUPERAR SENHA"></input>
                </div>
                <div class="mt-3 d-flex justify-content-between align-items-center">
-                  <a href="<?php echo site_url('password/esqueci'); ?>" class="auth-link text-black">Esqueceu sua senha?</a>
+                  <a href="<?php echo site_url('login'); ?>" class="auth-link text-black">Fazer login</a>
                </div>
-               <div class="text-center mt-4 font-weight-light">
-                  Ainda não tem uma conta? <a href="<?php echo site_url('registrar') ?>" class="text-primary">Criar</a>
-               </div>
+
                <?php form_close(); ?>
             </div>
          </div>
@@ -90,6 +89,13 @@
 <!-- ----------------------------------------------- -->
 
 <?php echo $this->section('scripts'); ?>
+
+<script>
+   $("form").submit(function() {
+      $(this).find(":submit").attr('disabled', 'disabled');
+      $("#btn-reset-senha").val("ENVIANDO EMAIL...")
+   });
+</script>
 
 <?php echo $this->endSection(); ?>
 
