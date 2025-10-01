@@ -146,7 +146,7 @@
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="images/faces/face5.jpg" alt="profile" />
-              <span class="nav-profile-name">Louis Barnett</span>
+              <span class="nav-profile-name"><?php  ?></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
@@ -171,9 +171,21 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="<?php echo site_url('admin/home') ?>">
               <i class="mdi mdi-home menu-icon"></i>
               <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo site_url('admin/categorias') ?>">
+              <i class="mdi mdi-box-shadow menu-icon"></i>
+              <span class="menu-title">Categorias</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo site_url('admin/usuarios') ?>">
+              <i class="mdi mdi-account menu-icon"></i>
+              <span class="menu-title">Usuários</span>
             </a>
           </li>
           <li class="nav-item">
