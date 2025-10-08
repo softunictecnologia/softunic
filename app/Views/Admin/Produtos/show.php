@@ -16,13 +16,22 @@
 
 <?php echo $this->section('conteudo'); ?>
 
-<div class="col-lg-6 grid-margin stretch-card">
+<div class="col-lg-5 grid-margin stretch-card">
   <div class="card">
     <div class="card-header bg-light pb-0 pt-4">
       <h4 class="card-title"><?php echo esc($titulo); ?></h4>
     </div>
 
     <div class="card-body">
+
+
+      <?php if ($produto->imagem): ?>
+        <img class="card-img-top" src="<?php echo site_url("admin/produtos/imagem/$produto->imagem"); ?>" alt="<?php echo esc($produto->nome); ?>">
+      <?php else: ?>
+        <img class="card-img-top" src="<?php echo site_url('admin/images/sem_imagem.png'); ?>" alt="Card image cap">
+      <?php endif; ?>
+
+      <hr>
 
       <p class="card-text">
         <span class="font-weight-bold">Nome: </span>
@@ -60,10 +69,13 @@
       <div class="mt-4">
 
         <?php if ($produto->deletado_em == null): ?>
-          <a href="<?php echo site_url("admin/produtos/editar/$produto->id"); ?>" class="btn btn-dark btn-sm mr-2">
+          <a href="<?php echo site_url("admin/produtos/editarimagem/$produto->id"); ?>" class="btn btn-success btn-sm">
+            Imagem
+          </a>
+          <a href="<?php echo site_url("admin/produtos/editar/$produto->id"); ?>" class="btn btn-dark btn-sm">
             Editar
           </a>
-          <a href="<?php echo site_url("admin/produtos/excluir/$produto->id"); ?>" class="btn btn-danger btn-sm mr-2">
+          <a href="<?php echo site_url("admin/produtos/excluir/$produto->id"); ?>" class="btn btn-danger btn-sm">
             Excluir
           </a>
         <?php else: ?>
