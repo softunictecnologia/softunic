@@ -16,7 +16,7 @@
 
 <?php echo $this->section('conteudo'); ?>
 
-<div class="col-lg-5 grid-margin stretch-card">
+<div class="col-lg-6 grid-margin stretch-card">
   <div class="card">
     <div class="card-header bg-light pb-0 pt-4">
       <h4 class="card-title"><?php echo esc($titulo); ?></h4>
@@ -24,7 +24,7 @@
 
     <div class="card-body">
 
-
+      ''
       <?php if ($produto->imagem): ?>
         <img class="card-img-top" src="<?php echo site_url("admin/produtos/imagem/$produto->imagem"); ?>" alt="<?php echo esc($produto->nome); ?>">
       <?php else: ?>
@@ -77,6 +77,9 @@
           </a>
           <a href="<?php echo site_url("admin/produtos/excluir/$produto->id"); ?>" class="btn btn-danger btn-sm">
             Excluir
+          </a>
+          <a href="<?php echo site_url("admin/produtos/extras/$produto->id"); ?>" class="btn btn-info btn-sm">
+            Extras
           </a>
         <?php else: ?>
           <a href="<?php echo site_url("admin/produtos/desfazerexclusao/$produto->id"); ?>" class="btn btn-dark btn-sm">

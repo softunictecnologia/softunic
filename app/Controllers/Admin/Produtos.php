@@ -12,11 +12,15 @@ class Produtos extends BaseController
 
     private $produtoModel;
     private $categoriaModel;
+    private $extraModel;
+    private $produtoExtraModel;
 
     public function __construct()
     {
         $this->produtoModel = new \App\Models\ProdutoModel();
         $this->categoriaModel = new \App\Models\CategoriaModel();
+        $this->produtoExtraModel = new \App\Models\ProdutoExtraModel();
+        $this->extraModel = new \App\Models\ExtraModel();
     }
 
     public function index()
@@ -319,6 +323,18 @@ class Produtos extends BaseController
             readfile($caminhoImagem);
             exit;
         }
+    }
+
+    public function extras($id = null)
+    {
+        $produto = $this->buscaProdutoOu404($id);
+        $data = [
+            'titulo' => "Gerenciar os extras do produto $produto->nome",
+            'produto' => $produto,
+            'extras' => $this->extraModel->where('ativo', true)->findAll(),
+            'produtosExtras' => $this->produtoExtraModel->buscaExtrasDoProduto($produto->id),
+        ];
+        return view('Admin/produtos/extras', $data);
     }
 
     private function buscaprodutoOu404(int|null $id)
