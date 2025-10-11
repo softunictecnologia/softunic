@@ -33,7 +33,7 @@
         </ul>
       <?php endif; ?>
 
-      <?php echo form_open("admin/produtos/cadastrarextras/$produto->id") ?>
+      <?php echo form_open("admin/produtos/cadastraextras/$produto->id") ?>
 
       <div class="form-row">
 
@@ -42,7 +42,7 @@
           <label>Escolha o extra do produto</label>
           <select class="form-control select2" name="extra_id">
 
-            <option>Escolha...</option>
+            <option value="">Escolha...</option>
             <?php foreach ($extras as $extra): ?>
 
               <Option value="<?php echo $extra->id; ?>"><?php echo $extra->nome; ?></Option>
@@ -67,12 +67,56 @@
       <?php echo form_close() ?>
 
       <div class="form-row">
+        <hr>
 
         <div class="col-md-12">
           <hr>
-          <?php if (!empty($produtosExtras)): ?>
+          <?php if (empty($produtosExtras)): ?>
             <p>Esse produto não possui extras até no momento.</p>
           <?php else: ?>
+
+            <div class="col-lg-12 grid-margin stretch-card">
+
+              <div class="card-body">
+                <h4 class="card-title">Extras do Produto</h4>
+                <p class="card-description">
+                  <code>Aproveite para gerenciar os extras</code>
+                </p>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Extra</th>
+                        <th>Preço</th>
+                        <th>Remover</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <?php foreach ($produtosExtras as $extraProduto): ?>
+                        <tr>
+                          <td><?php echo esc($extraProduto->extra); ?></td>
+                          <td>R$&nbsp;<?php echo esc(number_format($extraProduto->preco, 2)); ?></td>
+
+                          <td>
+                            <?php echo form_open("admin/produtos/excluirextra/$extraProduto->id/$extraProduto->produto_id"); ?>
+
+                            <button type="submit" class="btn badge badge-danger">&nbsp;X&nbsp;</button>
+                            <?php echo form_close(); ?>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+
+                    </tbody>
+                  </table>
+
+                  <div class="mt-3">
+                    <?php echo $pager->links() ?>
+                  </div>
+                </div>
+              </div>
+
+            </div>
 
           <?php endif; ?>
 
